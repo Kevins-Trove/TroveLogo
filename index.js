@@ -13,9 +13,7 @@ const ColorPicker = require('./lib/colorPickerClass');
 //------------------------------------------------------------
 // Start and initialize app
 //------------------------------------------------------------
-//main();
-const c = new ColorPicker();
-console.log(c.find("red"));
+main();
 
 //------------------------------------------------------------
 // Main
@@ -26,6 +24,32 @@ function main() {
   console.log('\x1b[33m%s\x1b[0m',`Answer dynamic prompts to autogenerate SVG logo.`);
   console.log(`----------------------------------------------------------------------`);
   inquirer.prompt([
+    {
+      type: 'input',
+      name: 'backColor',
+      message: 'Background color (enter color name or hex)?',
+      validate: function(input) {
+        const c = new ColorPicker().find(input);
+        const colorNames = [];
+
+        // check for no matches
+        if (c.length == 0) {
+          return 'Unrecognizedized color';
+        }
+
+        // check for more than one match
+        if (c.length > 0) {
+          c.forEach(e => {
+            colorNames.push( e.color);
+        })
+          
+          return `Type complete name (${colorNames.join(", ")})`;
+        }
+        
+        return true; // Return true if the input is valid
+      }
+      
+    },
       {
         type: 'input',
         name: 'text',
@@ -39,10 +63,30 @@ function main() {
         }
       },
       {
-        type: 'color',
+        type: 'input',
         name: 'textColor',
-        message: 'Text Color (enter key work or hex)?',
-        format: 'hex', 
+        message: 'Text Color (enter color name or hex)?',
+        validate: function(input) {
+          const c = new ColorPicker().find(input);
+          const colorNames = [];
+
+          // check for no matches
+          if (c.length == 0) {
+            return 'Unrecognizedized color';
+          }
+
+          // check for more than one match
+          if (c.length > 0) {
+            c.forEach(e => {
+              colorNames.push( e.color);
+          })
+            
+            return `Type complete name (${colorNames.join(", ")})`;
+          }
+          
+          return true; // Return true if the input is valid
+        }
+        
       },
       {
         type: 'list',
@@ -54,25 +98,41 @@ function main() {
       {
         type: 'input',
         name: 'shapeColor',
-        message: 'Shape Color?'
+        message: 'Shape Color?',
+        validate: function(input) {
+          const c = new ColorPicker().find(input);
+          const colorNames = [];
+
+          // check for no matches
+          if (c.length == 0) {
+            return 'Unrecognizedized color';
+          }
+
+          // check for more than one match
+          if (c.length > 0) {
+            c.forEach(e => {
+              colorNames.push( e.color);
+          })
+            
+            return `Type complete name (${colorNames.join(", ")})`;
+          }
+          
+          return true; // Return true if the input is valid
+        }
+        
+      },
+      {
+        type: 'input',
+        name: 'fileName',
+        message: 'File name for logo?',
+        default: "logo"
       }
     ])
     .then((answers) => {
-      const myReadMe = new ReadMe(answers);
-      myReadMe.writeToFile();
+      const shape = new Shape(answers);
+      shape.writeToFile();
     });
 }
 
 
-const svg = `
-    <svg version="1.1"
-        width="300" height="200"
-        xmlns="http://www.w3.org/2000/svg">
 
-    <rect width="100%" height="100%" fill="red" />
-
-    <circle cx="150" cy="100" r="80" fill="green" />
-
-    <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">SVG</text>
-
-    </svg>`;
