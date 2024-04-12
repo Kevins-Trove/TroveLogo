@@ -29,26 +29,8 @@ function main() {
       name: 'backColor',
       message: 'Background color (enter color name or hex)?',
       validate: function(input) {
-        const c = new ColorPicker().find(input);
-        const colorNames = [];
-
-        // check for no matches
-        if (c.length == 0) {
-          return 'Unrecognizedized color';
-        }
-
-        // check for more than one match
-        if (c.length > 1) {
-          c.forEach(e => {
-            colorNames.push( e.color);
-        })
-          
-          return `Type complete name (${colorNames.join(", ")})`;
-        }
-        
-        return true; // Return true if the input is valid
+        return validateColor(input);
       }
-      
     },
       {
         type: 'input',
@@ -66,25 +48,8 @@ function main() {
         type: 'input',
         name: 'textColor',
         message: 'Text Color (enter color name or hex)?',
-        validate: function(input) {
-          const c = new ColorPicker().find(input);
-          const colorNames = [];
-
-          // check for no matches
-          if (c.length == 0) {
-            return 'Unrecognizedized color';
-          }
-
-          // check for more than one match
-          if (c.length > 1) {
-            c.forEach(e => {
-              colorNames.push( e.color);
-          })
-            
-            return `Type complete name (${colorNames.join(", ")})`;
-          }
-          
-          return true; // Return true if the input is valid
+        validate:  function(input) {
+          return validateColor(input);
         }
         
       },
@@ -99,25 +64,8 @@ function main() {
         type: 'input',
         name: 'shapeColor',
         message: 'Shape Color?',
-        validate: function(input) {
-          const c = new ColorPicker().find(input);
-          const colorNames = [];
-
-          // check for no matches
-          if (c.length == 0) {
-            return 'Unrecognizedized color';
-          }
-
-          // check for more than one match
-          if (c.length > 1) {
-            c.forEach(e => {
-              colorNames.push( e.color);
-          })
-            
-            return `Type complete name (${colorNames.join(", ")})`;
-          }
-          
-          return true; // Return true if the input is valid
+        validate:  function(input) {
+          return validateColor(input);
         }
         
       },
@@ -132,6 +80,27 @@ function main() {
       const shape = new Shape(answers);
       shape.writeToFile();
     });
+}
+
+function validateColor(input) {
+  const c = new ColorPicker().find(input);
+  const colorNames = [];
+
+  // check for no matches
+  if (c.length == 0) {
+    return 'Unrecognizedized color';
+  }
+
+  // check for more than one match
+  if (c.length > 1) {
+    c.forEach(e => {
+      colorNames.push( e.color);
+  })
+    
+    return `Type complete name (${colorNames.join(", ")})`;
+  }
+  
+  return true; // Return true if the input is valid
 }
 
 
