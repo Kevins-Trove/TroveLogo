@@ -38,7 +38,7 @@ function main() {
         }
 
         // check for more than one match
-        if (c.length > 0) {
+        if (c.length > 1) {
           c.forEach(e => {
             colorNames.push( e.color);
         })
@@ -76,7 +76,7 @@ function main() {
           }
 
           // check for more than one match
-          if (c.length > 0) {
+          if (c.length > 1) {
             c.forEach(e => {
               colorNames.push( e.color);
           })
@@ -109,7 +109,7 @@ function main() {
           }
 
           // check for more than one match
-          if (c.length > 0) {
+          if (c.length > 1) {
             c.forEach(e => {
               colorNames.push( e.color);
           })
