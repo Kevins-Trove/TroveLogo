@@ -1,15 +1,14 @@
 //------------------------------------------------------------
+// Trove Logo generator app
+//------------------------------------------------------------
+
+//------------------------------------------------------------
 // Packages
 //------------------------------------------------------------
 const inquirer = require('inquirer');
-//const inquirerColor = require('inquirer-color').default;
 const SvgGeneratorClass = require('./lib/svgGeneratorClass');
 const ColorPicker = require('./lib/colorPickerClass');
 
-//------------------------------------------------------------
-// Default values
-//------------------------------------------------------------
-//inquirer.registerPrompt('color', inquirerColor);
 //------------------------------------------------------------
 // Start and initialize app
 //------------------------------------------------------------
@@ -82,6 +81,11 @@ function main() {
     });
 }
 
+//------------------------------------------------------------
+// Support functions
+//------------------------------------------------------------
+
+// Forces text entry to color list
 function validateColor(input) {
   const c = new ColorPicker().find(input);
   const colorNames = [];
@@ -102,6 +106,3 @@ function validateColor(input) {
   
   return true; // Return true if the input is valid
 }
-
-
-
