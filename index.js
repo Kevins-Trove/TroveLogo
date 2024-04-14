@@ -3,7 +3,7 @@
 //------------------------------------------------------------
 const inquirer = require('inquirer');
 //const inquirerColor = require('inquirer-color').default;
-const Shape = require('./lib/shapeGeneratorClass');
+const SvgGeneratorClass = require('./lib/svgGeneratorClass');
 const ColorPicker = require('./lib/colorPickerClass');
 
 //------------------------------------------------------------
@@ -57,7 +57,7 @@ function main() {
         type: 'list',
         name: 'shape',
         message: 'Shape behind text?',
-        choices: ["circle", "square", "triangle"],
+        choices: ["Circle", "Square", "Triangle"],
         default: "circle"
       },
       {
@@ -77,8 +77,8 @@ function main() {
       }
     ])
     .then((answers) => {
-      const shape = new Shape(answers);
-      shape.writeToFile();
+      const svg = new SvgGeneratorClass(answers);
+      svg.writeToFile();
     });
 }
 
@@ -91,13 +91,13 @@ function validateColor(input) {
     return 'Unrecognizedized color';
   }
 
-  // check for more than one match
+  // check for more than one match, give user list of choices
   if (c.length > 1) {
     c.forEach(e => {
       colorNames.push( e.color);
   })
     
-    return `Type complete name (${colorNames.join(", ")})`;
+    return `Type complete name from suggested colors (${colorNames.join(", ")})`;
   }
   
   return true; // Return true if the input is valid
